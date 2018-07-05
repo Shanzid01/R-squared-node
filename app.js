@@ -1,4 +1,4 @@
-var DBHelper=require('./DB_helper');
+const DBHelper=require('./DB_helper');
 RunProgram();
 
 async function RunProgram(){
@@ -18,7 +18,7 @@ async function RunProgram(){
     var searchResults= await DBHelper.searchData("region_data","crud_data",{username:'shanzid'});
     console.log(searchResults);
 
-    //delete data
+    //devare data
     var updateStat= await DBHelper.deleteData("region_data","crud_data",{username:'shanzid'});
     console.log(updateStat+ " row(s) affected.");
 }

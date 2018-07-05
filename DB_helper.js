@@ -1,11 +1,11 @@
-var MongoClient = require('mongodb').MongoClient;
-let uri="mongodb+srv://common_user:xTp547a@r-squared-data-9sxhm.mongodb.net/region_data";
-var CloudDB;
+const MongoClient = require('mongodb').MongoClient;
+const uri="mongodb+srv://common_user:xTp547a@r-squared-data-9sxhm.mongodb.net/region_data";
+let CloudDB;
 
 function initDB(db_name){
     return new Promise(async (resolve, reject)=>{
         console.log("Fetching DB..");
-        var client=await MongoClient.connect(uri);
+        let client=await MongoClient.connect(uri);
         CloudDB=client.db(db_name);
         console.log("DB Initialized: ", CloudDB.s.databaseName);
         resolve();
@@ -26,8 +26,8 @@ module.exports = {
             if(!CloudDB || CloudDB.s.databaseName!=db_name){await initDB(db_name);}
             CloudDB.collection(collection_name, async function (err, collection) {
                 if(err){reject(err);}
-                var insert_task= await collection.insertOne(data);
-                var data_id=insert_task["ops"][0]["_id"];
+                let insert_task= await collection.insertOne(data);
+                let data_id=insert_task["ops"][0]["_id"];
                 if(data_id!=null){
                     resolve(data_id);
                 }else{
@@ -40,7 +40,7 @@ module.exports = {
         return new Promise(async (resolve, reject)=>{
             if(!CloudDB || CloudDB.s.databaseName!=db_name){await initDB(db_name);}
             CloudDB.collection(collection_name, async function (err, collection) {
-                var update_task= await collection.update(criteria, { $set: new_data }, {w:1});
+                let update_task= await collection.update(criteria, { $set: new_data }, {w:1});
                 resolve(update_task["result"]["nModified"]);
             });
         });
@@ -49,7 +49,7 @@ module.exports = {
         return new Promise(async (resolve, reject)=>{
             if(!CloudDB || CloudDB.s.databaseName!=db_name){await initDB(db_name);}
             CloudDB.collection(collection_name, async function (err, collection) {
-                var delete_task= await collection.remove(criteria);
+                let delete_task= await collection.remove(criteria);
                 resolve(delete_task["result"]["n"]);
             });
         });
@@ -58,7 +58,7 @@ module.exports = {
         return new Promise(async (resolve, reject)=>{
             if(!CloudDB || CloudDB.s.databaseName!=db_name){await initDB(db_name);}
             CloudDB.collection(collection_name, async function (err, collection) {
-                var results= await collection.find(criteria);
+                let results= await collection.find(criteria);
                 resolve(results.toArray());
             });
         });
