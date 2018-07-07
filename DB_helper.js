@@ -26,7 +26,7 @@ module.exports = {
             if(!CloudDB || CloudDB.s.databaseName!=db_name){await initDB(db_name);}
             CloudDB.collection(collection_name, async function (err, collection) {
                 if(err){reject(err);}
-                let insert_task= await collection.insertOne(data);
+                let insert_task= await (data.length>1? collection.insertMany(data):collection.insertOne(data[0]));
                 let data_id=insert_task["ops"][0]["_id"];
                 if(data_id!=null){
                     resolve(data_id);
